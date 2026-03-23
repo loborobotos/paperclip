@@ -3,8 +3,8 @@ FROM node:lts-slim
 # Install paperclipai globally
 RUN npm install -g paperclipai@latest
 
-# Create paperclip home directory
-RUN mkdir -p /paperclip && chown node:node /paperclip
+# Create paperclip home directory with full permissions
+RUN mkdir -p /paperclip/instances/default && chmod -R 777 /paperclip
 
 ENV NODE_ENV=production \
   HOME=/paperclip \

@@ -19,7 +19,7 @@ ENV NODE_ENV=production \
 
 EXPOSE 3100
 
-USER node
+# Run as root to avoid permission issues
 WORKDIR /paperclip
 
 CMD ["npx", "paperclipai", "onboard", "--yes"]

@@ -22,6 +22,10 @@ RUN pnpm install --frozen-lockfile
 # (shared → plugin-sdk → db → adapters → server → ui → cli)
 RUN pnpm -r build
 
+# Swap workspace package.json exports from src/ (tsx dev) → dist/ (production)
+# simulates what npm publish does via publishConfig
+RUN node scripts/patch-exports.mjs
+
 # Embed built UI into server for static serving
 RUN cp -r ui/dist server/ui-dist
 

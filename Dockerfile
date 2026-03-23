@@ -14,10 +14,12 @@ COPY . .
 # Install all dependencies (including devDeps needed for build)
 RUN pnpm install --frozen-lockfile
 
-# Build: UI must come first (server embeds it as ui-dist)
-RUN pnpm --filter @paperclipai/ui build
+# Build workspace deps in order (server depends on shared + plugin-sdk)
+RUN pnpm --filter @paperclipai/shared build
+RUN pnpm --filter @paperclipai/plugin-sdk build
 
-# Copy built UI into server
+# Build UI and embed into server
+RUN pnpm --filter @paperclipai/ui build
 RUN cp -r ui/dist server/ui-dist
 
 # Build server and CLI

@@ -31,15 +31,15 @@ export function LettaConfigFields({
           }
           immediate
           className={inputClass}
-          placeholder="Lobo Roboto"
+          placeholder="My Agent"
         />
       </Field>
-      <Field label="LettaBot URL" hint="Internal URL to LettaBot service (Railway internal networking)">
+      <Field label="LettaBot URL" hint="URL to your LettaBot service (e.g. http://localhost:8080 or internal service URL)">
         <DraftInput
           value={
             isCreate
               ? values!.url
-              : eff("adapterConfig", "lettabotUrl", String(config.lettabotUrl ?? "http://lettabot.railway.internal:8080"))
+              : eff("adapterConfig", "lettabotUrl", String(config.lettabotUrl ?? "http://localhost:8080"))
           }
           onCommit={(v) =>
             isCreate
@@ -48,7 +48,7 @@ export function LettaConfigFields({
           }
           immediate
           className={inputClass}
-          placeholder="http://lettabot.railway.internal:8080"
+          placeholder="http://localhost:8080"
         />
       </Field>
     </>

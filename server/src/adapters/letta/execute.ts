@@ -15,12 +15,12 @@ export async function execute(ctx: AdapterExecutionContext): Promise<AdapterExec
 
 /**
  * Execute via LettaBot internal API.
- * Paperclip → LettaBot (Railway internal) → Letta Cloud → Agent
+ * Paperclip → LettaBot → Letta Cloud → Agent
  */
 async function executeViaLettaBot(ctx: AdapterExecutionContext): Promise<AdapterExecutionResult> {
   const { config, runId, agent, context, onLog, onMeta } = ctx;
 
-  const lettabotUrl = asString(config.lettabotUrl, "http://lettabot.railway.internal:8080");
+  const lettabotUrl = asString(config.lettabotUrl, "http://localhost:8080");
   const lettabotAgentName = asString(config.lettabotAgentName, agent.name);
   const lettabotApiKey = asString(config.lettabotApiKey, "");
   const timeoutMs = asNumber(config.timeoutMs, 120000);

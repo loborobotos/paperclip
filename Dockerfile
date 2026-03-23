@@ -11,6 +11,10 @@ WORKDIR /app
 # Copy monorepo source (node_modules excluded via .dockerignore)
 COPY . .
 
+# Hoist all packages to /app/node_modules so Node.js ESM can resolve
+# external deps (zod, drizzle-orm, etc.) from the CLI bundle at runtime
+RUN echo "shamefully-hoist=true" >> .npmrc
+
 # Install all dependencies (including devDeps needed for build)
 RUN pnpm install --frozen-lockfile
 

@@ -42,7 +42,7 @@ async function testLettaBotConnection(
   config: Record<string, unknown>,
   checks: AdapterEnvironmentCheck[],
 ): Promise<void> {
-  const lettabotUrl = asString(config.lettabotUrl, "http://lettabot.railway.internal:8080");
+  const lettabotUrl = asString(config.lettabotUrl, "http://localhost:8080");
   const lettabotAgentName = asString(config.lettabotAgentName, "");
 
   if (!lettabotAgentName) {
@@ -113,7 +113,7 @@ async function testLettaBotConnection(
           code: "letta_lettabot_unhealthy",
           level: "warn",
           message: `LettaBot health check returned ${response.status}.`,
-          hint: "Verify LettaBot is running and accessible via internal networking.",
+          hint: "Verify LettaBot is running and accessible at the configured URL.",
         });
       }
     }
@@ -122,7 +122,7 @@ async function testLettaBotConnection(
       code: "letta_lettabot_unreachable",
       level: "warn",
       message: err instanceof Error ? err.message : "LettaBot probe failed",
-      hint: "Verify LettaBot is running in the same Railway project and internal networking is enabled.",
+      hint: "Verify LettaBot is running and accessible at the configured lettabotUrl.",
     });
   } finally {
     clearTimeout(timeout);

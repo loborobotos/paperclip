@@ -10,7 +10,7 @@ export function buildLettaConfig(v: CreateConfigValues): Record<string, unknown>
   if (v.url) {
     ac.lettabotUrl = v.url;
   } else {
-    ac.lettabotUrl = "http://lettabot.railway.internal:8080";
+    ac.lettabotUrl = "http://localhost:8080";
   }
 
   ac.timeoutMs = 120000;

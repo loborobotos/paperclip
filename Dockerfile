@@ -18,17 +18,12 @@ RUN echo "shamefully-hoist=true" >> .npmrc
 # Install all dependencies (including devDeps needed for build)
 RUN pnpm install --frozen-lockfile
 
-# Build workspace deps in order (server depends on shared + plugin-sdk)
-RUN pnpm --filter @paperclipai/shared build
-RUN pnpm --filter @paperclipai/plugin-sdk build
+# Build all workspace packages in topological dependency order
+# (shared → plugin-sdk → db → adapters → server → ui → cli)
+RUN pnpm -r build
 
-# Build UI and embed into server
-RUN pnpm --filter @paperclipai/ui build
+# Embed built UI into server for static serving
 RUN cp -r ui/dist server/ui-dist
-
-# Build server and CLI
-RUN pnpm --filter @paperclipai/server build
-RUN pnpm --filter paperclipai build
 
 ENV NODE_ENV=production \
   HOME=/paperclip \

@@ -21,7 +21,7 @@ Use when:
 - The agent needs persistent memory across runs (Letta agents retain state automatically)
 - You have existing Letta Cloud agents you want to orchestrate via Paperclip
 - The agent needs tools managed by LettaBot (Bash, GitHub, web search, etc.)
-- You want Railway internal networking between Paperclip and LettaBot (lettabot mode)
+- You want service-to-service networking between Paperclip and LettaBot (lettabot mode)
 
 Don't use when:
 - You need a simple one-shot script execution (use the "process" adapter instead)
@@ -32,13 +32,14 @@ Don't use when:
 ## Connection Modes
 
 ### lettabot (default, recommended)
-Routes messages through LettaBot running in the same Railway project.
-Uses internal networking for low-latency, no public exposure.
+Routes messages through a LettaBot instance co-located with Paperclip.
+When both services run on the same host or private network, use internal/localhost URLs
+for low-latency communication with no public exposure.
 
 Required fields:
 - connectionMode (string): "lettabot"
 - lettabotAgentName (string): Agent name in LettaBot config (must match YAML agent entry)
-- lettabotUrl (string, optional): LettaBot endpoint, default http://lettabot.railway.internal:8080
+- lettabotUrl (string, optional): LettaBot endpoint, default http://localhost:8080
 - lettabotApiKey (string, optional): LettaBot API bearer token (use secret:LETTABOT_API_KEY)
 - timeoutMs (number, optional): request timeout in milliseconds, default 120000
 
